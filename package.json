@@ -1,0 +1,19 @@
+{
+  "name": "dyne",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/liproqq/dyne.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/liproqq/dyne/issues"
+  },
+  "homepage": "https://github.com/liproqq/dyne#readme"
+}

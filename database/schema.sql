@@ -1,3 +1,5 @@
+CREATE DATABASE IF NOT EXISTS dynedb;
+
 CREATE TABLE `player` (
 	`player_id` INT NOT NULL AUTO_INCREMENT,
 	`first` varchar(255) NOT NULL,
