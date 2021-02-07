@@ -1,0 +1,13 @@
+<mat-card>
+    <mat-form-field appearance="fill">
+        <mat-label>E-Mail</mat-label>
+        <input matInput placeholder="max@mustermann.de" [formControl]="email" required>
+        <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>Passwort</mat-label>
+        <input matInput type="password" required>
+    </mat-form-field>
+    <button (click)="login('email', 'Password')" mat-raised-button color="primary">Primary</button>
+    
+</mat-card>
