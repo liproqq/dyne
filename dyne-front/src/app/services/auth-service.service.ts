@@ -9,9 +9,7 @@ export class AuthService {
   
      
     constructor(private http: HttpClient) {
-      interface User {
-        label: string;
-      }
+
     }
       
     login(email:string, password:string ) {
