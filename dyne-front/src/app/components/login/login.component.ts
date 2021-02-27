@@ -1,34 +1,37 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth-service.service'
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
+    form:FormGroup;
 
-  constructor() { }
+    constructor(private fb:FormBuilder, 
+                 private authService: AuthService, 
+                 private router: Router) {
 
-  ngOnInit(): void {
-    email:String;
-    password:String;
-  }
-
-
-  email = new FormControl('', [Validators.required, Validators.email]);
-
-  getErrorMessage() {
-    if (this.email.hasError('required')) {
-      return 'Bitte etwas eingeben';
+        this.form = this.fb.group({
+            email: ['',Validators.required],
+            password: ['',Validators.required]
+        });
     }
 
-    return this.email.hasError('email') ? 'Ungültige E-Mail' : '';
-  }
+    login() {
+        const val = this.form.value;
 
-  login(email:String, password:String){
-    console.log(email, password);
-    
-  }
-  
+        if (val.email && val.password) {
+            this.authService.login(val.email, val.password)
+                .subscribe(
+                    () => {
+                        console.log("User is logged in");
+                        this.router.navigateByUrl('/');
+                    }
+                );
+        }
+    }
 }
