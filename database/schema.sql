@@ -12,6 +12,7 @@ CREATE TABLE `player` (
 CREATE TABLE `gm` (
 	`gm_id` INT NOT NULL AUTO_INCREMENT,
 	`name` varchar(255) NOT NULL UNIQUE,
+	`password` varchar(255),
 	`debut` tinyint UNSIGNED,
 	`steam` varchar(255) NOT NULL UNIQUE,
 	PRIMARY KEY (`gm_id`)
