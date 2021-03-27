@@ -14,12 +14,10 @@ import {MatCardModule} from '@angular/material/card';
 
 
 import { LoginComponent } from './components/login/login.component';
-import { MenuComponent } from './components/layout/menu/menu.component';
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
-    MenuComponent
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -29,6 +27,7 @@ import { MenuComponent } from './components/layout/menu/menu.component';
     MatMenuModule,
     MatFormFieldModule,
     MatCardModule,
+    FormsModule,
     ReactiveFormsModule,
     MatInputModule,
     MatButtonModule
