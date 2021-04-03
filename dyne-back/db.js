@@ -14,7 +14,7 @@ const pool = mysql.createPool({
  
 });
  
-let db = {}; //create an empty object you will use later to write  and export your queries. 
+let db = {}; // create an empty object to write and export queries. 
  
 db.getAllPlayers = () =>{
     return new Promise((resolve, reject)=>{
@@ -26,6 +26,20 @@ db.getAllPlayers = () =>{
         });
     });
 };
+
+db.createUser = (name, password, steam) => {
+    return new Promise((resolve, reject) => {
+        pool.query(sql`INSERT INTO gm (name, password, steam) 
+                       VALUES (${name}, ${password}, ${steam})`,
+                  (error, players) => {
+                    if (error) {
+                        return reject(error);
+                    }
+                    return resolve(players);
+                  });
+    });
+
+}
 
 
 module.exports = db

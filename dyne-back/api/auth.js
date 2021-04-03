@@ -2,16 +2,26 @@
 
 // /auth/ route
  
-const express =require('express');
+const express = require('express');
 const apiRouter = express.Router();
+const bcrypt = require('bcrypt');
 const db = require('../db.js');
+const jwt = require('jsonwebtoken');
 
-apiRouter.get('/validate/', async (req, res, next)=>{
+apiRouter.post('/createUser/', async (req, res, next) => {
     try {        
-        res.status(200).send(req.body.email);
-    } catch(e) {
+        const { name, password, steam } = req.body;
+
+        bcrypt.hash(password, 5, function (err, hashedPW) {
+            if (err) throw err;
+            console.log(hashedPW)
+            db.createUser(name, hashedPW, steam).then(user => {
+                res.sendStatus(201).send("user created", user)
+            }).catch(err => console.log(err))
+        });
+    } catch (e) {
         console.log(e);
-        res.sendStatus(500);
+        res.status(500).send(e);
     }
 });
 
