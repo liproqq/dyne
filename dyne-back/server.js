@@ -1,28 +1,24 @@
 const express = require('express')
 const app = express()
-const mysql = require('mysql')
-const port = 3030
+require('dotenv').config()
+const cors = require('cors')
+const morgan = require('morgan')
+const cookieParser = require('cookie-parser');
 
-var connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'dynedb'
-})
+const routes = require('./api/apiroutes');
+const authRoutes = require('./api/auth');
 
-connection.connect()
+const port = process.env.PORT || 3030
 
-connection.query('select * from game', function (err, rows, fields) {
-  if (err) throw err
+app.use(express.json());
+app.use(cors())
+app.use(morgan('dev'))
 
-//   console.log(rows)
-//   console.log(fields)
-})
+app.use('/api/', routes)
+app.use('/auth/', authRoutes)
 
-connection.end()
-
-app.get('/', (req, res) => {
-  res.send('Hello World!')
+app.get('*', (req, res) => {
+  res.status(404).send('Not found')
 })
 
 app.listen(port, () => {
