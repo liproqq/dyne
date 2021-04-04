@@ -7,8 +7,14 @@ const cookieParser = require('cookie-parser');
 
 const routes = require('./api/apiroutes');
 const authRoutes = require('./api/auth');
+const port = process.env.PORT || 3030;
+const expressJwt = require('express-jwt');
 
-const port = process.env.PORT || 3030
+// pass as middleware for auth-guarded routes
+const checkIfAuthenticated = expressJwt({
+    secret: process.env.JWT_PRIVATE_KEY,
+    algorithms: ['HS256']
+}); 
 
 app.use(express.json());
 app.use(cors())
