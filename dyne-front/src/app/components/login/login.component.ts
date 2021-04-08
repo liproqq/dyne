@@ -17,7 +17,7 @@ export class LoginComponent {
                  private router: Router) {
 
         this.form = this.fb.group({
-            email: ['',Validators.required],
+            name: ['',Validators.required],
             password: ['',Validators.required]
         });
     }
@@ -25,12 +25,12 @@ export class LoginComponent {
     login() {
         const val = this.form.value;
 
-        if (val.email && val.password) {
-            this.authService.login(val.email, val.password)
+        if (val.name && val.password) {
+            this.authService.login(val.name, val.password)
                 .subscribe(
                     () => {
                         console.log("User is logged in");
-                        this.router.navigateByUrl('/');
+                        this.router.navigateByUrl('/login');
                     }
                 );
         }

@@ -1,29 +1,35 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { catchError, map, tap } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 
 import * as moment from "moment";
-import { IGm } from '../interfaces/gm';
 
 @Injectable({
   providedIn: 'root'
 })
+
+interface jwtToken {
+  idToken: string;
+  expiresIn: string
+};
 export class AuthService {
   constructor(private http: HttpClient) {
 
   }
-
+  
   login(name: string, password: string) {
-    return this.http.post<IGm>('/api/login', { name, password })
+    return this.http.post<jwtToken>('/auth/login', { name, password })
       .pipe(
-        tap(res => this.setSession)
+        tap(res => {
+          this.setSession(res);
+          localStorage.setItem('gm', name);
+        })
       )
 
   }
 
   private setSession(authResult: { expiresIn: moment.DurationInputArg1; idToken: string; }) {
     const expiresAt = moment().add(authResult.expiresIn, 'second');
-
     localStorage.setItem('id_token', authResult.idToken);
     localStorage.setItem("expires_at", JSON.stringify(expiresAt.valueOf()));
   }
@@ -31,6 +37,7 @@ export class AuthService {
   logout() {
     localStorage.removeItem("id_token");
     localStorage.removeItem("expires_at");
+    localStorage.removeItem("gm");
   }
 
   public isLoggedIn() {
