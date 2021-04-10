@@ -14,10 +14,14 @@ import {MatCardModule} from '@angular/material/card';
 
 
 import { LoginComponent } from './components/login/login.component';
+import { MenuComponent } from './components/menu/menu.component';
+import { EnterStatsComponent } from './components/enter-stats/enter-stats.component';
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    MenuComponent,
+    EnterStatsComponent
   ],
   imports: [
     BrowserModule,
