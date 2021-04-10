@@ -1,18 +1,22 @@
-<form [formGroup]="form">
-    <fieldset>
-        <legend>Login</legend>
-        <div class="form-field">
-            <label>Name:</label>
-            <input name="name" formControlName="name">
+<mat-card>
+    <mat-card-title>Login</mat-card-title>
+    <form [formGroup]="form">
+        <fieldset>
+            <div class="form-field">
+                <mat-form-field appearance="fill">
+                    <mat-label>Name</mat-label>
+                    <input matInput formControlName="name">
+                </mat-form-field>
+            </div>
+            <div class="form-field">
+                <mat-form-field appearance="fill">
+                    <mat-label>Password</mat-label>
+                    <input matInput type="password" formControlName="password">
+                </mat-form-field>
+            </div>
+        </fieldset>
+        <div class="form-buttons">
+            <button mat-flat-button color="primary" (click)="login()">Login</button>
         </div>
-        <div class="form-field">
-            <label>Password:</label>
-            <input name="password" formControlName="password" 
-                   type="password">
-        </div>
-    </fieldset>
-    <div class="form-buttons">
-        <button class="button button-primary" 
-                (click)="login()">Login</button>
-    </div>
-</form>
+    </form>
+</mat-card>

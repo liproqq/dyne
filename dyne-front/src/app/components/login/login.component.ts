@@ -30,7 +30,7 @@ export class LoginComponent {
                 .subscribe(
                     () => {
                         console.log("User is logged in");
-                        this.router.navigateByUrl('/login');
+                        this.router.navigateByUrl('/enter-stats');
                     }
                 );
         }

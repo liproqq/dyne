@@ -4,14 +4,14 @@ import { tap } from 'rxjs/operators';
 
 import * as moment from "moment";
 
-@Injectable({
-  providedIn: 'root'
-})
 
 interface jwtToken {
   idToken: string;
   expiresIn: string
 };
+@Injectable({
+  providedIn: 'root'
+})
 export class AuthService {
   constructor(private http: HttpClient) {
 
