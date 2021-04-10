@@ -1,0 +1,12 @@
+<mat-toolbar color="primary">
+    <button mat-icon-button>
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span>Dyne Stats App</span>
+    <span class="spacer"></span>
+    <button *ngIf="isLoggedIn" mat-icon-button>
+      <span class="material-icons" (click)="logout()">
+        logout
+      </span>
+    </button>
+  </mat-toolbar>
