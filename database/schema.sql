@@ -1,5 +1,4 @@
 CREATE DATABASE IF NOT EXISTS dynedb;
-
 CREATE TABLE `player` (
 	`player_id` INT NOT NULL AUTO_INCREMENT,
 	`first` varchar(255) NOT NULL,
@@ -8,7 +7,6 @@ CREATE TABLE `player` (
 	`birthdate` DATE NOT NULL,
 	PRIMARY KEY (`player_id`)
 );
-
 CREATE TABLE `gm` (
 	`gm_id` INT NOT NULL AUTO_INCREMENT,
 	`name` varchar(255) NOT NULL UNIQUE,
@@ -17,7 +15,6 @@ CREATE TABLE `gm` (
 	`steam` varchar(255) NOT NULL UNIQUE,
 	PRIMARY KEY (`gm_id`)
 );
-
 CREATE TABLE `season` (
 	`season` smallint NOT NULL AUTO_INCREMENT,
 	`year` year NOT NULL,
@@ -25,33 +22,29 @@ CREATE TABLE `season` (
 	`title` varchar(255) NOT NULL,
 	PRIMARY KEY (`season`)
 );
-
 CREATE TABLE `team` (
 	`team_id` smallint NOT NULL AUTO_INCREMENT,
-	`name` varchar(255) NOT NULL UNIQUE,
-	`short` varchar(255) NOT NULL UNIQUE,
-	`code` varchar(255) NOT NULL UNIQUE,
+	`name` varchar(255) NOT NULL,
+	`short` varchar(255) NOT NULL,
+	`code` varchar(255) NOT NULL,
 	`color1` char(7) NOT NULL,
 	`color2` char(7) NOT NULL,
 	`font1` char(7) NOT NULL,
 	`font2` char(7) NOT NULL,
 	`old_id` smallint NOT NULL,
 	`start` smallint NOT NULL,
-	`end` smallint NOT NULL,
 	`logo` varchar(255) NOT NULL,
 	PRIMARY KEY (`team_id`)
 );
-
 CREATE TABLE `game` (
 	`game_id` INT NOT NULL AUTO_INCREMENT,
 	`season` smallint UNSIGNED NOT NULL,
 	`home` INT UNSIGNED NOT NULL,
 	`away` INT UNSIGNED NOT NULL,
 	`date` DATE NOT NULL,
-	`type` enum('reg','po','cup','asg') NOT NULL DEFAULT 'reg',
+	`type` enum('reg', 'po', 'cup', 'asg') NOT NULL DEFAULT 'reg',
 	PRIMARY KEY (`game_id`)
 );
-
 CREATE TABLE `game_stats` (
 	`game_stats_id` INT NOT NULL AUTO_INCREMENT,
 	`player_id` INT NOT NULL,
@@ -76,7 +69,6 @@ CREATE TABLE `game_stats` (
 	`pog` bool NOT NULL,
 	PRIMARY KEY (`game_stats_id`)
 );
-
 CREATE TABLE `game_stats_team` (
 	`game_stats_id` INT NOT NULL AUTO_INCREMENT,
 	`team_id` INT NOT NULL,
@@ -84,7 +76,7 @@ CREATE TABLE `game_stats_team` (
 	`pip` smallint NOT NULL,
 	`lead` smallint UNSIGNED,
 	`poss` TIME NOT NULL,
-    `tf` smallint UNSIGNED,
+	`tf` smallint UNSIGNED,
 	`2nd` smallint UNSIGNED,
 	`bench` smallint UNSIGNED,
 	`fbp` smallint UNSIGNED,
@@ -92,14 +84,13 @@ CREATE TABLE `game_stats_team` (
 	`pipa` smallint UNSIGNED,
 	PRIMARY KEY (`game_stats_id`)
 );
-
 CREATE TABLE `roster` (
 	`roster_id` INT NOT NULL AUTO_INCREMENT,
 	`team_id` INT NOT NULL,
 	`player_id` INT NOT NULL,
 	`season` INT NOT NULL,
 	`ovr` smallint UNSIGNED NOT NULL,
-	`pos` enum('PG','SG','SF','PF','C') NOT NULL,
+	`pos` enum('PG', 'SG', 'SF', 'PF', 'C') NOT NULL,
 	`salary` int UNSIGNED NOT NULL,
 	`length` bool NOT NULL,
 	`birds` bool NOT NULL DEFAULT '0',
@@ -112,29 +103,27 @@ CREATE TABLE `roster` (
 	`team_prev` smallint NOT NULL DEFAULT '0',
 	PRIMARY KEY (`roster_id`)
 );
-
-ALTER TABLE `gm` ADD CONSTRAINT `gm_fk0` FOREIGN KEY (`debut`) REFERENCES `season`(`season`);
-
-ALTER TABLE `team` ADD CONSTRAINT `team_fk0` FOREIGN KEY (`start`) REFERENCES `season`(`season`);
-
-ALTER TABLE `team` ADD CONSTRAINT `team_fk1` FOREIGN KEY (`end`) REFERENCES `season`(`season`);
-
-ALTER TABLE `game` ADD CONSTRAINT `game_fk0` FOREIGN KEY (`season`) REFERENCES `season`(`season`);
-
-ALTER TABLE `game` ADD CONSTRAINT `game_fk1` FOREIGN KEY (`home`) REFERENCES `team`(`team_id`);
-
-ALTER TABLE `game` ADD CONSTRAINT `game_fk2` FOREIGN KEY (`away`) REFERENCES `team`(`team_id`);
-
-ALTER TABLE `game_stats` ADD CONSTRAINT `game_stats_fk0` FOREIGN KEY (`player_id`) REFERENCES `player`(`player_id`);
-
-ALTER TABLE `game_stats` ADD CONSTRAINT `game_stats_fk1` FOREIGN KEY (`game_id`) REFERENCES `game`(`game_id`);
-
-ALTER TABLE `game_stats_team` ADD CONSTRAINT `game_stats_team_fk0` FOREIGN KEY (`team_id`) REFERENCES `team`(`team_id`);
-
-ALTER TABLE `game_stats_team` ADD CONSTRAINT `game_stats_team_fk1` FOREIGN KEY (`game_id`) REFERENCES `game`(`game_id`);
-
-ALTER TABLE `roster` ADD CONSTRAINT `roster_fk0` FOREIGN KEY (`team_id`) REFERENCES `team`(`team_id`);
-
-ALTER TABLE `roster` ADD CONSTRAINT `roster_fk1` FOREIGN KEY (`player_id`) REFERENCES `player`(`player_id`);
-
-ALTER TABLE `roster` ADD CONSTRAINT `roster_fk2` FOREIGN KEY (`season`) REFERENCES `player`(`player_id`);
+ALTER TABLE `gm`
+ADD CONSTRAINT `gm_fk0` FOREIGN KEY (`debut`) REFERENCES `season`(`season`);
+ALTER TABLE `team`
+ADD CONSTRAINT `team_fk0` FOREIGN KEY (`start`) REFERENCES `season`(`season`);
+ALTER TABLE `game`
+ADD CONSTRAINT `game_fk0` FOREIGN KEY (`season`) REFERENCES `season`(`season`);
+ALTER TABLE `game`
+ADD CONSTRAINT `game_fk1` FOREIGN KEY (`home`) REFERENCES `team`(`team_id`);
+ALTER TABLE `game`
+ADD CONSTRAINT `game_fk2` FOREIGN KEY (`away`) REFERENCES `team`(`team_id`);
+ALTER TABLE `game_stats`
+ADD CONSTRAINT `game_stats_fk0` FOREIGN KEY (`player_id`) REFERENCES `player`(`player_id`);
+ALTER TABLE `game_stats`
+ADD CONSTRAINT `game_stats_fk1` FOREIGN KEY (`game_id`) REFERENCES `game`(`game_id`);
+ALTER TABLE `game_stats_team`
+ADD CONSTRAINT `game_stats_team_fk0` FOREIGN KEY (`team_id`) REFERENCES `team`(`team_id`);
+ALTER TABLE `game_stats_team`
+ADD CONSTRAINT `game_stats_team_fk1` FOREIGN KEY (`game_id`) REFERENCES `game`(`game_id`);
+ALTER TABLE `roster`
+ADD CONSTRAINT `roster_fk0` FOREIGN KEY (`team_id`) REFERENCES `team`(`team_id`);
+ALTER TABLE `roster`
+ADD CONSTRAINT `roster_fk1` FOREIGN KEY (`player_id`) REFERENCES `player`(`player_id`);
+ALTER TABLE `roster`
+ADD CONSTRAINT `roster_fk2` FOREIGN KEY (`season`) REFERENCES `player`(`player_id`);
