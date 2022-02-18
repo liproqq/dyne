@@ -15,6 +15,13 @@ CREATE TABLE `gm` (
 	`steam` varchar(255) NOT NULL UNIQUE,
 	PRIMARY KEY (`gm_id`)
 );
+CREATE TABLE `gm2team` (
+	`gm2team_id` INT NOT NULL AUTO_INCREMENT,
+	`gm_id` INT NOT NULL AUTO_INCREMENT,
+	`team_id` INT NOT NULL AUTO_INCREMENT,
+	`season_id` INT NOT NULL AUTO_INCREMENT,
+	PRIMARY KEY (`gm2team_id`)
+);
 CREATE TABLE `season` (
 	`season` smallint NOT NULL AUTO_INCREMENT,
 	`year` year NOT NULL,
@@ -107,6 +114,12 @@ ALTER TABLE `gm`
 ADD CONSTRAINT `gm_fk0` FOREIGN KEY (`debut`) REFERENCES `season`(`season`);
 ALTER TABLE `team`
 ADD CONSTRAINT `team_fk0` FOREIGN KEY (`start`) REFERENCES `season`(`season`);
+ALTER TABLE `gm2team`
+ADD CONSTRAINT `gm2team_fk0` FOREIGN KEY (`season_id`) REFERENCES `season`(`season`);
+ALTER TABLE `gm2team`
+ADD CONSTRAINT `gm2team_fk1` FOREIGN KEY (`team_id`) REFERENCES `team`(`team_id`);
+ALTER TABLE `gm2team`
+ADD CONSTRAINT `gm2team_fk2` FOREIGN KEY (`gm_id`) REFERENCES `gm`(`gm_id`);
 ALTER TABLE `game`
 ADD CONSTRAINT `game_fk0` FOREIGN KEY (`season`) REFERENCES `season`(`season`);
 ALTER TABLE `game`
